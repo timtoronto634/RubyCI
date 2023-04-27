@@ -1,7 +1,30 @@
-jobs:
-  build:
+version: 2.1
+
+executors:
+  ruby_3_2_rspec_runner:
     docker:
       - image: cimg/ruby:3.2.2
+
+commands:
+  rspec-test:
     steps:
       - checkout
       - run: ruby --version
+      - store_test_results:
+          path: /tmp/test-rb-results
+
+
+jobs:
+  test-rb-on-ruby_3_2:
+    executor:
+        ruby_3_2_rspec_runner
+    docker:
+      - image: cimg/ruby:3.2.2
+    steps:
+      - rspec-test
+      
+
+workflows:
+  test-rb:
+    jobs:
+      - test-rb-on-ruby_3_2
