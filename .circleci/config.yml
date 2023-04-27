@@ -10,6 +10,8 @@ commands:
     steps:
       - checkout
       - run: ruby --version
+      - run: bundle install
+      - run: bundle ex rspec hello_world.spec
       - store_test_results:
           path: /tmp/test-rb-results
 
